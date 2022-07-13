@@ -1,7 +1,7 @@
 # coding: utf-8
 
 def random_image():
-    from PIL import Image, ImageFilter, ImageDraw, ImageFont
+    from PIL import Image, ImageDraw
     from random import randint
 
     img = Image.new('1', (800, 480), 1)
@@ -29,11 +29,27 @@ def random_image():
     return img
 
 
+def now_image():
+    from datetime import datetime
+    from PIL import Image, ImageDraw, ImageFont
+    now = datetime.now()
+    ymd = now.strftime('%Y/%m/%d')
+    hms = now.strftime('%H:%M:%S')
+    img = Image.new('1', (800, 480), 1)
+    draw = ImageDraw.Draw(img)
+    draw.text((0, 0), ymd, font=ImageFont.truetype('/home/zfhrp/.fonts/JetBrainsMono-Light.ttf', 100), fill=0)
+    draw.text((0, 100), hms, font=ImageFont.truetype('/home/zfhrp/.fonts/JetBrainsMono-Light.ttf', 100), fill=0)
+    return img
+
+
 def main():
     import sys
     img_name = sys.argv[1] if len(sys.argv) > 1 else 'imaga_output.bmp'
 
-    img = random_image()
+    # img = random_image()
+    img = now_image()
+
+    img.rotate(180)
     img.save(img_name)
 
 
